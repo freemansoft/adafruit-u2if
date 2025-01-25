@@ -10,15 +10,15 @@ jobs:
       - name: Install gcc-arm
         uses: carlosperate/arm-none-eabi-gcc-action@v1
         with:
-          release: '10-2020-q4'
+          release: "10-2020-q4"
       - name: Get pico-sdk submodule
         run: git submodule update --init --recursive
-#-- HACK-----------------------------------------------------------
-# needed for older pico-sdk, see here for more info:
-# https://github.com/raspberrypi/pico-sdk/pull/457
+      #-- HACK-----------------------------------------------------------
+      # needed for older pico-sdk, see here for more info:
+      # https://github.com/raspberrypi/pico-sdk/pull/457
       - name: Patch pico-sdk for crystal startup
         run: sed -i 's/xosc_hw->startup = startup_delay;/xosc_hw->startup = startup_delay * 64;/' firmware/pico-sdk/src/rp2_common/hardware_xosc/xosc.c
-#-- HACK-----------------------------------------------------------
+      #-- HACK-----------------------------------------------------------
       - name: Build firmwares
         run: |
           arm-none-eabi-gcc --version
@@ -30,6 +30,11 @@ jobs:
           cmake -DBOARD=QTPY .. ; make ; mv u2if.uf2 u2if_qtpy.uf2
           cmake -DBOARD=ITSYBITSY .. ; make ; mv u2if.uf2 u2if_itsybitsy.uf2
           cmake -DBOARD=QT2040_TRINKEY .. ; make ; mv u2if.uf2 u2if_trinkey.uf2
+          cmake -DBOARD=FEATHER_EPD .. ; make ; mv u2if.uf2 u2if_trinkey.uf2
+          cmake -DBOARD=FEATHER_RFM .. ; make ; mv u2if.uf2 u2if_trinkey.uf2
+          cmake -DBOARD=FEATHER_CAN .. ; make ; mv u2if.uf2 u2if_trinkey.uf2
+          cmake -DBOARD=KB2040 .. ; make ; mv u2if.uf2 u2if_trinkey.uf2
+
           ls -l u2if_*.uf2
       - name: Add Build Artifacts to CI Run
         uses: actions/upload-artifact@v4
