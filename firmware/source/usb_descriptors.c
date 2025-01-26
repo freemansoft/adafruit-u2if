@@ -177,7 +177,7 @@ uint8_t const desc_configuration[] =
                 TUD_CDC_DESCRIPTOR(ITF_NUM_CDC, 4, EPNUM_CDC_NOTIF, 8, EPNUM_CDC_OUT, EPNUM_CDC_IN, 64),
 
                 // Interface number, string index, protocol, report descriptor len, EP In & Out address, size & polling interval
-                TUD_HID_INOUT_DESCRIPTOR(ITF_NUM_HID, 5, HID_PROTOCOL_NONE, sizeof(desc_hid_report), EPNUM_HID,
+                TUD_HID_INOUT_DESCRIPTOR(ITF_NUM_HID, 5, HID_PROTOCOL_BOOT sizeof(desc_hid_report), EPNUM_HID,
                                          0x80 | EPNUM_HID, CFG_TUD_HID_BUFSIZE, /*10*/ 1)
         };
 
